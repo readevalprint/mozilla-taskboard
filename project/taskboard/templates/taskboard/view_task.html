@@ -7,11 +7,11 @@
   <div id="instructions" class="well">
     {{ markdown(task.instructions) }}
     <br>
-    {% if task.accepted_by==request.user.get_profile() %}
+    {% if task.assigned_to==request.user.get_profile() %}
       {{ _("Assigned to") }}: {{ _("You") }}
       <a href="{{ url("release_task", slug=task.slug) }}"  class="btn">{{ _("Release this task") }}</a>
-    {% elif task.accepted_by %}
-      {{ _("Assigned to") }}: {{ task.accepted_by }}
+    {% elif task.assigned_to %}
+      {{ _("Assigned to") }}: {{ task.assigned_to }}
     {% else %}
       <a href="{{ url("take_task", slug=task.slug) }}"  class="btn">{{ _("Take this task") }}</a>
     {% endif %}

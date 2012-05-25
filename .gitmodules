@@ -25,3 +25,18 @@
 [submodule "vendor-local/django"]
 	path = vendor-local/django
 	url = https://github.com/django/django.git
+[submodule "vendor-local/django-ajax-selects"]
+	path = vendor-local/django-ajax-selects
+	url = https://github.com/crucialfelix/django-ajax-selects.git
+[submodule "vendor-local/django-browserid"]
+	path = vendor-local/django-browserid
+	url = git://github.com/mozilla/django-browserid.git
+[submodule "vendor-local/debug_toolbar"]
+	path = vendor-local/debug_toolbar
+	url = git://github.com/django-debug-toolbar/django-debug-toolbar.git
+[submodule "vendor-local/django_compressor"]
+	path = vendor-local/django_compressor
+	url = https://github.com/jezdez/django_compressor.git
+[submodule "vendor-local/django-extensions"]
+	path = vendor-local/django-extensions
+	url = https://github.com/django-extensions/django-extensions.git

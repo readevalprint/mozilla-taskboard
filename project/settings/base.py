@@ -5,7 +5,7 @@ from funfactory.settings_base import *
 import os
 
 # Path from the project
-here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
+here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', x)
 
 # Name of the top-level module where you put all your apps.
 # If you did not install Playdoh with the funfactory installer script
@@ -13,36 +13,36 @@ here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
 # clone.
 PROJECT_MODULE = 'project'
 
-# Bundles is a dictionary of two dictionaries, css and js, which list css files
-# and js files that can be bundled together by the minify app.
-MINIFY_BUNDLES = {
-    'css': {
-        'example_css': (
-            'css/examples/main.css',
-        ),
-        'example_mobile_css': (
-            'css/examples/mobile.css',
-        ),
-    },
-    'js': {
-        'example_js': (
-            'js/examples/libs/jquery-1.4.4.min.js',
-            'js/examples/libs/jquery.cookie.js',
-            'js/examples/init.js',
-        ),
-    }
-}
-
 # Defines the views served for root URLs.
 ROOT_URLCONF = '%s.urls' % PROJECT_MODULE
 
-INSTALLED_APPS = list(INSTALLED_APPS) + [
+INSTALLED_APPS = (
+    'funfactory',
+    'jingo_minify',
+    'tower',
+    'cronjobs',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.staticfiles',
+    'django.contrib.sessions',
+    'commonware.response.cookies',
+    'djcelery',
+    'django_nose',
+    'session_csrf',
+    'product_details',
     'django.contrib.admin',
+
+    # 3rd party
+    'ajax_select',
+    'django_browserid',
+    'django_extensions',
+
 
     # Application base, containing global templates.
     '%s.base' % PROJECT_MODULE,
     '%s.taskboard' % PROJECT_MODULE,
-]
+    'compressor',
+)
 
 
 # Because Jinja2 is the default template loader, add any non-Jinja templated
@@ -50,6 +50,7 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
 JINGO_EXCLUDE_APPS = [
     'admin',
     'registration',
+    'debug_toolbar',
 ]
 
 # Tells the extract script what files to look for L10n in and what function
@@ -85,6 +86,43 @@ ES_INDEXES = dict(default='taskboard')
 
 
 # Static and Media
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+    )
+
 STATICFILES_DIRS = (
-    here('static'),
+    here('static/'),
+    )
+STATIC_URL = r'/static/'
+
+MEDIA_URL = r'media'
+
+# Templates
+TEMPLATE_LOADERS = (
+    'jingo.Loader',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    )
+
+TEMPLATE_DIRS = here('templates')
+
+JINJA_CONFIG = {
+    'extensions': [
+    'tower.template.i18n',
+    'jinja2.ext.do',
+    'jinja2.ext.with_',
+    'jinja2.ext.loopcontrols',
+    'compressor.contrib.jinja2ext.CompressorExtension',
+    ]
+}
+
+AUTHENTICATION_BACKENDS = (
+    'django_browserid.auth.BrowserIDBackend',
+    )
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.static',
+    'django_browserid.context_processors.browserid_form',
     )

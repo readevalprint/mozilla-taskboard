@@ -1,5 +1,12 @@
+# TODO: fix django-sha2 for django1.4
 django
+
 elasticutils
 pyes
 requests
 uuslug
+django-ajax-selects
+django-browserid
+debug_toolbar
+django_compressor
+django-extensions

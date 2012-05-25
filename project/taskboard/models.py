@@ -12,8 +12,6 @@ from tower import ugettext_lazy as _
 from uuslug import uuslug as slugify
 
 
-
-
 class Task(SearchMixin, models.Model):
     contact = models.ForeignKey(User, verbose_name=_(u'Contact'),
                                 related_name="contact_for")

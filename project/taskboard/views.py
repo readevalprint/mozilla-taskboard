@@ -1,12 +1,11 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView, UpdateView, ListView, DetailView
 
 from funfactory.urlresolvers import reverse
-from taskboard.forms import TaskForm
-from taskboard.models import Task
-from users.models import UserProfile
+from project.taskboard.forms import TaskForm
+from project.taskboard.models import Task
 
 
 class CreateTask(CreateView):
@@ -21,20 +20,6 @@ class CreateTask(CreateView):
 
     def get_success_url(self):
         return reverse('list_tasks')
-
-
-@login_required
-def release_task(request, slug):
-    task = get_object_or_404(Task, slug=slug)
-    user = request.user
-    profile = user.get_profile()
-
-    if ((task.accepted_by == profile or user.is_superuser)
-        and (request.method == 'POST' and 'release' in request.POST)):
-            task.accepted_by = None
-            task.save()
-            return redirect(task.get_absolute_url())
-    return render(request, 'taskboard/release_task.html', {'task': task})
 
 
 class EditTask(UpdateView):
