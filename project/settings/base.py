@@ -18,7 +18,6 @@ ROOT_URLCONF = '%s.urls' % PROJECT_MODULE
 
 INSTALLED_APPS = (
     'funfactory',
-    'jingo_minify',
     'tower',
     'cronjobs',
     'django.contrib.auth',
@@ -29,7 +28,6 @@ INSTALLED_APPS = (
     'djcelery',
     'django_nose',
     'session_csrf',
-    'product_details',
     'django.contrib.admin',
 
     # 3rd party
@@ -106,7 +104,9 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
     )
 
-TEMPLATE_DIRS = here('templates')
+TEMPLATE_DIRS = (
+    here('templates'),
+    )
 
 JINJA_CONFIG = {
     'extensions': [
@@ -118,11 +118,11 @@ JINJA_CONFIG = {
     ]
 }
 
-AUTHENTICATION_BACKENDS = (
-    'django_browserid.auth.BrowserIDBackend',
-    )
-
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.static',
     'django_browserid.context_processors.browserid_form',
+    )
+
+AUTHENTICATION_BACKENDS = (
+    'django_browserid.auth.BrowserIDBackend',
     )
